@@ -4,6 +4,8 @@
 #include <string>
 #include <bitset>
 
+#define TIPO_CONTROLE_ERRO 0
+
 // Camadas receptoras
 void CamadaEnlaceDadosReceptora(vector<int> &quadro);
 void CamadaDeAplicacaoReceptora(vector<int> &quadro);
@@ -22,9 +24,7 @@ string binaryToString(vector<int> quadro);
 // Trata os erros que surgiram na transmissao dos dados
 void CamadaEnlaceDadosReceptora(vector<int> &quadro) {
 
-    int tipoDeControleDeErro = 0;
-
-    switch( tipoDeControleDeErro ) {
+    switch( TIPO_CONTROLE_ERRO ) {
 
         case 0:
         
@@ -68,7 +68,7 @@ void AplicacaoReceptora(string mensagem) {
 // Adiciona o metodo de paridade par para controle de erros
 void CamadaEnlaceDadosReceptoraControleDeErroBitParidadePar(vector<int> &quadro) {
 
-    //
+    // data.map((item, i) => item ? i : null ).filter( item => item != null ).reduce( (a, b) => a ^ b )
 
 }
 
@@ -91,15 +91,15 @@ string binaryToString(vector<int> quadro) {
     string mensagem = "";
 
     int chars = quadro.size() / 8;
-    for(int j=0; j<chars; j++) {
+    for(int i=0; i<chars; i++) {
 
         char parsed = 0;
 
-        for (int i = 0; i < 8; i++) {
+        for (int j = 0; j<8; j++) {
 
-            if (quadro[ i + (j*8) ] == 1) {
+            if (quadro[ j + (i*8) ] == 1) {
 
-                parsed |= 1 << (7 - i);
+                parsed |= 1 << (7 - j);
             
             }
 
