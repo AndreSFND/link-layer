@@ -4,12 +4,22 @@
 #include <string>
 #include <bitset>
 
+// Camadas transmissoras
+vector<int> AplicacaoTransmissora();
 vector<int> CamadaDeAplicacaoTransmissora(string mensagem);
 vector<int> CamadaEnlaceDadosTransmissora(vector<int> &quadro);
+
+// Controle de erros
 void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> &quadro);
 void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar(vector<int> &quadro);
 void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro);
 
+// Utilidades
+string TextToBinaryString(string words);
+
+
+
+// Le a entrada do usuario
 vector<int> AplicacaoTransmissora() {
 
     string mensagem;
@@ -20,18 +30,7 @@ vector<int> AplicacaoTransmissora() {
 
 }
 
-string TextToBinaryString(string words) {
-
-    string binaryString = "";
-    
-    for (char& _char : words) {
-        binaryString +=bitset<8>(_char).to_string();
-    }
-    
-    return binaryString;
-
-}
-
+// Converte a entrada do usuario para binario
 vector<int> CamadaDeAplicacaoTransmissora(string mensagem) {
 
     string binaryString = TextToBinaryString(mensagem);
@@ -50,25 +49,7 @@ vector<int> CamadaDeAplicacaoTransmissora(string mensagem) {
 
 }
 
-
-void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> &quadro) {
-
-    //
-
-}
-
-void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar(vector<int> &quadro) {
-
-    //
-
-}
-
-void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro) {
-
-    //
-
-}
-
+// Adiciona bits para controle de erros
 vector<int> CamadaEnlaceDadosTransmissora(vector<int> &quadro) {
 
     int tipoDeControleDeErro = 0;
@@ -96,5 +77,39 @@ vector<int> CamadaEnlaceDadosTransmissora(vector<int> &quadro) {
     }
 
     return quadro;
+
+}
+
+// Adiciona o metodo de paridade par para controle de erros
+void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> &quadro) {
+
+    //
+
+}
+
+// Adiciona o metodo de paridade impar para controle de erros
+void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar(vector<int> &quadro) {
+
+    //
+
+}
+
+// Adiciona o metodo CRC para controle de erros
+void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro) {
+
+    //
+
+}
+
+// Converte caracteres para binario
+string TextToBinaryString(string words) {
+
+    string binaryString = "";
+    
+    for (char& _char : words) {
+        binaryString +=bitset<8>(_char).to_string();
+    }
+    
+    return binaryString;
 
 }

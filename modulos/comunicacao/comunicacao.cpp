@@ -7,6 +7,7 @@
 
 #define PORCENTAGEM_ERROS 0
 
+// Simula o meio de comunicacao entre dois pontos, gerando erros aleatorios
 vector<int> MeioDeComunicacao(vector<int> &fluxoBrutoDeBits) {
 
     vector<int> fluxoBrutoDeBitsPontoA, fluxoBrutoDeBitsPontoB;
