@@ -3,6 +3,11 @@
 #include <bitset>
 #include <vector>
 
+// Utilizadas para gerar numeros aleatorios
+#include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
+
 using namespace std;
 
 void AplicacaoTransmissora();
@@ -12,6 +17,9 @@ void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadePar(vector<int> &quad
 void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar(vector<int> &quadro);
 void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro);
 
+void MeioDeComunicacao(vector<int> &fluxoBrutoDeBits);
+
+void CamadaEnlaceDadosReceptora(vector<int> &quadro);
 void CamadaDeAplicacaoReceptora(vector<int> &quadro);
 void AplicacaoReceptora(string mensagem);
 
@@ -88,7 +96,7 @@ void CamadaEnlaceDadosTransmissora(vector<int> &quadro) {
 
     }
 
-    CamadaDeAplicacaoReceptora(quadro);
+    MeioDeComunicacao(quadro);
 
 }
 
@@ -110,37 +118,32 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro) {
 
 }
 
-// void MeioDeComunicacao(int fluxoBrutoDeBits[]) {
+void MeioDeComunicacao(vector<int> &fluxoBrutoDeBits) {
 
-//     int erro, porcentagemDeErros;
-//     int fluxoBrutoDeBitsPontoA [], fluxoBrutoDeBitsPontoB [];
+    int porcentagemDeErros;
+    vector<int> fluxoBrutoDeBitsPontoA, fluxoBrutoDeBitsPontoB;
 
-//     porcentagemDeErros = 0;
-//     fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
+    porcentagemDeErros = 10;
+    fluxoBrutoDeBitsPontoA = fluxoBrutoDeBits;
 
-//     while( fluxoBrutoDeBitsPontoA.length != fluxoBrutoDeBitsPontoB.length ) {
+    srand( (unsigned)time(NULL) );
 
-//         if( (rand() % 100) == ? ) {
+    for (int i=0; i<fluxoBrutoDeBitsPontoA.size(); i++) {
 
-//             fluxoBrutoDeBitsPontoB += fluxoBrutoDeBitsPontoA;
+        int bit = rand() % 100 > porcentagemDeErros ? fluxoBrutoDeBitsPontoA[i] : !fluxoBrutoDeBitsPontoA[i];
+        fluxoBrutoDeBitsPontoB.push_back(bit);
 
-//         } else {
+    }
 
-//             fluxoBrutoDeBitsPontoA = fluxoBrutoDeBitsPontoB == 0 ? fluxoBrutoDeBitsPontoB++ : fluxoBrutoDeBitsPontoB--;
+    CamadaEnlaceDadosReceptora(fluxoBrutoDeBitsPontoB);
 
-//         }
+}
 
-//     }
+void CamadaEnlaceDadosReceptora(vector<int> &quadro) {
 
-//     CamadaEnlaceDadosReceptora(fluxoBrutoDeBitsPontoB);
+    CamadaDeAplicacaoReceptora(quadro);
 
-// }
-
-// void CamadaEnlaceDadosReceptora(vector<int> &quadro) {
-
-
-
-// }
+}
 
 string binaryToString(vector<int> quadro) {
 
