@@ -13,8 +13,7 @@ void CamadaDeAplicacaoReceptora(vector<int> &quadro);
 void AplicacaoReceptora(string mensagem);
 
 // Controle de erros
-void CamadaEnlaceDadosReceptoraControleDeErroBitParidadePar(vector<int> &quadro);
-void CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(vector<int> &quadro);
+void CamadaEnlaceDadosReceptoraControleDeErroBitParidade(vector<int> &quadro, int _paridade);
 void CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> &quadro);
 
 // Utilidades
@@ -30,13 +29,13 @@ void CamadaEnlaceDadosReceptora(vector<int> &quadro) {
 
         case 0:
         
-            CamadaEnlaceDadosReceptoraControleDeErroBitParidadePar(quadro);
+            CamadaEnlaceDadosReceptoraControleDeErroBitParidade(quadro, 0);
         
         break;
 
         case 1:
         
-            CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(quadro);
+            CamadaEnlaceDadosReceptoraControleDeErroBitParidade(quadro, 1);
         
         break;
 
@@ -86,101 +85,8 @@ void AplicacaoReceptora(string mensagem) {
 
 }
 
-// Adiciona o metodo de paridade par para controle de erros
-void CamadaEnlaceDadosReceptoraControleDeErroBitParidadePar(vector<int> &quadro) {
-
-    // Inicializa as variaveis de armazenamento das somas das linhas e colunas
-    int horizontalSum = 0;
-    vector<int> verticalSum(TAMANHO_PARIDADE+1);
-
-    // Inicializa os vetores de armazenamento das linhas e colunas erradas
-    vector<int> linhasErradas, colunasErradas;
-
-    cout << "Dados após o envio:" << endl;
-    int length = quadro.size();
-
-    // Inicia a iteracao pelo vetor de dados
-    for( int i=0; i<length; i++ ) {
-
-        // Le e imprime o bit atual
-        int bit = quadro[i];
-        cout << bit << " ";
-
-        // Soma o bit atual
-        horizontalSum += bit;
-
-        // Verifica se a linha esta correta
-        if( (i+1) % (TAMANHO_PARIDADE+1) == 0 ) {
-
-            if( horizontalSum % 2 != 0 ) {
-                
-                // Se a soma nao esta correta, adiciona a linha ao vetor de linhas incorretas
-                linhasErradas.push_back( (int)(i / (TAMANHO_PARIDADE+1)) );
-            
-            }
-
-            cout << endl;
-
-        }
-
-        // Atualiza o vetor de soma das colunas
-        verticalSum[ i%(TAMANHO_PARIDADE+1) ] += bit;
-
-    }
-
-    // Verifica quais colunas possuem paridade incorreta
-    for( int i=0; i<(TAMANHO_PARIDADE+1); i++ ) {
-
-        if( verticalSum[i] % 2 != 0 ) {
-
-            colunasErradas.push_back(i);
-
-        }
-
-    }
-
-    // Imprime os dados incorretos
-    cout << endl << "Linhas erradas:" << endl;
-    for (vector<int>::const_iterator i = linhasErradas.begin(); i != linhasErradas.end(); ++i)
-        cout << *i << ' ';
-    cout << endl;
-
-    cout << "Colunas erradas:" << endl;
-    for (vector<int>::const_iterator i = colunasErradas.begin(); i != colunasErradas.end(); ++i)
-        cout << *i << ' ';
-    cout << endl;
-
-    // Se ha apenas 1 bit errado, o corrige
-    if( linhasErradas.size() == 1 && colunasErradas.size() == 1 ) {
-
-        int i = linhasErradas[0];
-        int j = colunasErradas[0];
-
-        cout << "Alterando bit " << j + (i*(TAMANHO_PARIDADE+1)) << endl;
-        quadro[j + (i*9)] = !quadro[j + (i*(TAMANHO_PARIDADE+1))];
-
-    } else {
-
-        cout << "Mais de um erro encontrado, nao foi possivel corrigi-los!" << endl;
-
-    }
-
-
-    vector<int> quadroFinal;
-
-    // Retorna ao formato original dos dados
-    for( int i=0; i<length-(TAMANHO_PARIDADE+1); i++ ) {
-
-        if( (i+1) % (TAMANHO_PARIDADE+1) != 0 ) quadroFinal.push_back(quadro[i]);
-
-    }
-
-    quadro = quadroFinal;
-
-}
-
 // Adiciona o metodo de paridade impar para controle de erros
-void CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(vector<int> &quadro) {
+void CamadaEnlaceDadosReceptoraControleDeErroBitParidade(vector<int> &quadro, int _paridade) {
 
     // Inicializa as variaveis de armazenamento das somas das linhas e colunas
     int horizontalSum = 0;
@@ -205,7 +111,7 @@ void CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(vector<int> &quadr
         // Verifica se a linha esta correta
         if( (i+1) % (TAMANHO_PARIDADE+1) == 0 ) {
 
-            if( horizontalSum % 2 == 0 ) {
+            if( horizontalSum % 2 == _paridade ) {
                 
                 // Se a soma nao esta correta, adiciona a linha ao vetor de linhas incorretas
                 linhasErradas.push_back( (int)(i / (TAMANHO_PARIDADE+1)) );
@@ -224,7 +130,7 @@ void CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(vector<int> &quadr
     // Verifica quais colunas possuem paridade incorreta
     for( int i=0; i<(TAMANHO_PARIDADE+1); i++ ) {
 
-        if( verticalSum[i] % 2 == 0 ) {
+        if( verticalSum[i] % 2 == _paridade ) {
 
             colunasErradas.push_back(i);
 
@@ -250,11 +156,11 @@ void CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(vector<int> &quadr
         int j = colunasErradas[0];
 
         cout << "Alterando bit " << j + (i*(TAMANHO_PARIDADE+1)) << endl;
-        quadro[j + (i*9)] = !quadro[j + (i*(TAMANHO_PARIDADE+1))];
+        quadro[j + (i*(TAMANHO_PARIDADE+1))] = !quadro[j + (i*(TAMANHO_PARIDADE+1))];
 
     } else {
 
-        cout << "Mais de um erro encontrado, nao foi possivel corrigi-los!" << endl;
+        cout << endl << "Mais de um erro encontrado, nao foi possivel corrigi-los!" << endl;
 
     }
 
