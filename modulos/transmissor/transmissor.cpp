@@ -20,6 +20,8 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro);
 
 // Utilidades
 vector<int> stringToBinary(string words);
+string vecToStr(vector<int> v);
+string xor1(string a, string b);
 
 // Le a entrada do usuario
 vector<int> AplicacaoTransmissora() {
@@ -179,4 +181,33 @@ vector<int> stringToBinary(string words) {
 
     return binaryData;
 
+}
+
+string vecToStr(vector<int> v){
+    string str;
+    for(int x: v){
+        str.push_back((char) x + 48);
+    }
+
+    return str;
+}
+
+string xor1(string a, string b)
+{
+     
+    // Initialize result
+    string result = "";
+     
+    int n = b.length();
+     
+    // Traverse all bits, if bits are
+    // same, then XOR is 0, else 1
+    for(int i = 1; i < n; i++)
+    {
+        if (a[i] == b[i])
+            result += "0";
+        else
+            result += "1";
+    }
+    return result;
 }

@@ -15,10 +15,11 @@ void AplicacaoReceptora(string mensagem);
 // Controle de erros
 void CamadaEnlaceDadosReceptoraControleDeErroBitParidade(vector<int> &quadro, int _paridade);
 void CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> &quadro);
-string vecToStr(vector<int> v);
 
 // Utilidades
 string binaryToString(vector<int> quadro);
+string vecToStr(vector<int> v);
+string xor1(string a, string b);
 
 
 
@@ -220,4 +221,24 @@ string vecToStr(vector<int> v){
     }
 
     return str;
+}
+
+string xor1(string a, string b)
+{
+     
+    // Initialize result
+    string result = "";
+     
+    int n = b.length();
+     
+    // Traverse all bits, if bits are
+    // same, then XOR is 0, else 1
+    for(int i = 1; i < n; i++)
+    {
+        if (a[i] == b[i])
+            result += "0";
+        else
+            result += "1";
+    }
+    return result;
 }
