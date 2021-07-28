@@ -4,7 +4,7 @@
 #include <string>
 #include <bitset>
 
-#define TIPO_CONTROLE_ERRO 1
+#define TIPO_CONTROLE_ERRO 2
 #define TAMANHO_PARIDADE 8
 
 // Camadas receptoras
