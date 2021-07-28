@@ -14,7 +14,8 @@ Marcus Vinicius Santos Rodrigues - 11218862
 
 ## 1.1 Sobre o trabalho
 
-Texto.
+O programa simula o funcionamento da camada enlace, desde a transmissão da informação ao recebimento desta com prováveis erros nos dados. <br>
+O programa também realiza algoritmos de checagem de erros na transmissão. São eles: controle pelo bit de paridade e o cyclic redundancy check (CRC).
 
 ## 1.2 Como instalar
 
@@ -26,7 +27,6 @@ Texto.
 
 ## 2.1 Funcionamento do simulador
 
-Texto.
 
 ## 2.2 Informações técnicas
 
