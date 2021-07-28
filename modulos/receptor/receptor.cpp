@@ -1,4 +1,5 @@
 #include "receptor.hpp"
+#include "../utils/utils.hpp"
 
 #include <iostream>
 #include <string>
@@ -6,6 +7,7 @@
 
 #define TIPO_CONTROLE_ERRO 2
 #define TAMANHO_PARIDADE 8
+#define CHAVE "1101"
 
 // Camadas receptoras
 void CamadaEnlaceDadosReceptora(vector<int> &quadro);
@@ -18,8 +20,6 @@ void CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> &quadro);
 
 // Utilidades
 string binaryToString(vector<int> quadro);
-string vecToStr(vector<int> v);
-string xor1(string a, string b);
 
 
 
@@ -182,8 +182,15 @@ void CamadaEnlaceDadosReceptoraControleDeErroBitParidade(vector<int> &quadro, in
 
 // Adiciona o metodo CRC para controle de erros
 void CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> &quadro) {
-
-    //
+        string remainder = mod2div(vecToStr(quadro), CHAVE);
+        cout << "Remainder receptor = " << remainder << endl;
+        for(auto c:remainder){
+            if(c == '1'){ 
+                cout << "ERRO ENCONTRADO!" << endl;
+                cout << "---------------------------" << endl;
+                break;
+            }
+        } 
 
 }
 
@@ -212,33 +219,4 @@ string binaryToString(vector<int> quadro) {
 
     return mensagem;
 
-}
-
-string vecToStr(vector<int> v){
-    string str;
-    for(int x: v){
-        str.push_back((char) x + 48);
-    }
-
-    return str;
-}
-
-string xor1(string a, string b)
-{
-     
-    // Initialize result
-    string result = "";
-     
-    int n = b.length();
-     
-    // Traverse all bits, if bits are
-    // same, then XOR is 0, else 1
-    for(int i = 1; i < n; i++)
-    {
-        if (a[i] == b[i])
-            result += "0";
-        else
-            result += "1";
-    }
-    return result;
 }
