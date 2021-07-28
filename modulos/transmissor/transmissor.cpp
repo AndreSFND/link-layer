@@ -6,7 +6,7 @@
 #include <bitset>
 #include <algorithm>
 
-#define TIPO_CONTROLE_ERRO 0
+#define TIPO_CONTROLE_ERRO 2
 
 // Camadas transmissoras
 vector<int> AplicacaoTransmissora();
@@ -22,7 +22,7 @@ void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro);
 vector<int> stringToBinary(string words);
 vector<int> generateHammingCode(vector<int> msgBits, int m, int r);
 vector<int> findHammingCode(vector<int>& msgBit);
-
+string vecToStr(vector<int> v);
 
 // Le a entrada do usuario
 vector<int> AplicacaoTransmissora() {
@@ -102,7 +102,7 @@ void CamadaEnlaceDadosTransmissoraControleDeErroBitParidadeImpar(vector<int> &qu
 // Adiciona o metodo CRC para controle de erros
 void CamadaEnlaceDadosTransmissoraControleDeErroCRC(vector<int> &quadro) {
 
-    //
+    
 
 }
 
@@ -228,4 +228,13 @@ vector<int> findHammingCode(vector<int>& msgBit) {
  
     return hammingCode;
 
+}
+
+string vecToStr(vector<int> v){
+    string str;
+    for(int x: v){
+        str.push_back((char) x + 48);
+    }
+
+    return str;
 }

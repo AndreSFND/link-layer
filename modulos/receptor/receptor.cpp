@@ -4,7 +4,7 @@
 #include <string>
 #include <bitset>
 
-#define TIPO_CONTROLE_ERRO 0
+#define TIPO_CONTROLE_ERRO 2
 
 // Camadas receptoras
 void CamadaEnlaceDadosReceptora(vector<int> &quadro);
@@ -15,6 +15,7 @@ void AplicacaoReceptora(string mensagem);
 void CamadaEnlaceDadosReceptoraControleDeErroBitParidadePar(vector<int> &quadro);
 void CamadaEnlaceDadosReceptoraControleDeErroBitParidadeImpar(vector<int> &quadro);
 void CamadaEnlaceDadosReceptoraControleDeErroCRC(vector<int> &quadro);
+string vecToStr(vector<int> v);
 
 // Utilidades
 string binaryToString(vector<int> quadro);
@@ -111,4 +112,13 @@ string binaryToString(vector<int> quadro) {
 
     return mensagem;
 
+}
+
+string vecToStr(vector<int> v){
+    string str;
+    for(int x: v){
+        str.push_back((char) x + 48);
+    }
+
+    return str;
 }
